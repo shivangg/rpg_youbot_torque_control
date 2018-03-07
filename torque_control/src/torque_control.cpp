@@ -228,10 +228,11 @@ void TorqueController::followTrajectory(const torque_control::torque_trajectoryG
       break;
     }
     torque_command_pub.publish(generateJointTorqueMsg(m_torques));
+    pos_command_pub.publish(stop);
     ros::spinOnce();
     loop_rate.sleep();
   }
-  pos_command_pub.publish(stop);
+  // pos_command_pub.publish(stop);
   ros::spinOnce();
   loop_rate.sleep();
   traj.setSucceeded(result);
@@ -291,12 +292,13 @@ void TorqueController::stepInput()
       ros::shutdown();
     }
     torque_command_pub.publish(generateJointTorqueMsg(m_torques));
+    pos_command_pub.publish(stop);
     ros::spinOnce();
     loop_rate.sleep();
     k++;
   }
   ROS_INFO("step response done");
-  pos_command_pub.publish(stop);
+  // pos_command_pub.publish(stop);
   ros::spinOnce();
   loop_rate.sleep();
   mode = "idle";
@@ -312,7 +314,7 @@ bool TorqueController::gravityOnCallback(std_srvs::Empty::Request &req, std_srvs
 bool TorqueController::gravityOffCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Request &res)
 {
   ROS_INFO("turning gravity compensation off");
-  pos_command_pub.publish(stop);
+  // pos_command_pub.publish(stop);
   ros::spinOnce();
   mode = "idle";
   return true;
@@ -339,6 +341,7 @@ void TorqueController::gravityCompensation()
   if (rval == 0)
   {
     torque_command_pub.publish(generateJointTorqueMsg(m_torques));
+    pos_command_pub.publish(stop);
   }
   else
   {
