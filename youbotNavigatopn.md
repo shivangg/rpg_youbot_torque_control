@@ -15,3 +15,10 @@ Run the rtabmap node
 ```sh
 roslaunch rtabmap_ros rtabmap.launch rtabmap_args:="--delete_db_on_start" rviz:=true rtabmapviz:=false
 ```
+
+To use the saved config for RViz
+```sh
+rviz -d ~/.ros/nav.rviz
+```
+
+Laserscan working through Kinect. Explore ways to use this laserscan for autonomous navigation
